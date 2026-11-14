@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>[STAGING] Foldout</title>
+  <meta name="description" content="A daily city-guessing game. Read the street plan and buildings of an unlabelled 3D city and name it.">
+  <meta name="theme-color" content="#efe4cc">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/maplibre-gl.576b085fdd.css">
+  <link rel="stylesheet" href="assets/style.b75c127dca.css">
+</head>
+<body>
+  <header class="top">
+    <button class="icon" id="helpBtn" aria-label="How to play">?</button>
+    <div class="brand">
+      <h1>Foldout</h1>
+      <p class="sub" id="sub">Guess the city from its street plan</p>
+    </div>
+    <button class="icon" id="statsBtn" aria-label="Statistics">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17V10M8 17V5M13 17V8M18 17V2" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="sheet">
+      <div class="mapwrap" id="mapwrap">
+        <div id="map" role="img" aria-label="Unlabelled 3D map of today's city"></div>
+        <button class="recenter" id="recenter" type="button" aria-label="Reset view" title="Reset view">⟲</button>
+        <div class="loading" id="loading">Unfolding the map…</div>
+      </div>
+      <div class="stagebar">
+        <ol class="dots" id="dots" aria-hidden="true"></ol>
+        <span id="stageLabel"></span>
+      </div>
+      <ul class="hints" id="hints"></ul>
+    </section>
+
+    <form class="guess" id="guessForm" autocomplete="off">
+      <div class="combo">
+        <input id="guessInput" type="text" placeholder="Type a city…" aria-label="City" aria-autocomplete="list" aria-controls="suggest" spellcheck="false" autocapitalize="words">
+        <ul id="suggest" class="suggest" role="listbox" hidden></ul>
+      </div>
+      <button type="submit" id="guessBtn">Guess</button>
+    </form>
+
+    <ol class="guesses" id="guesses"></ol>
+
+    <section class="result" id="result" hidden>
+      <p class="verdict" id="verdict"></p>
+      <h2 id="answerName"></h2>
+      <p class="pattern" id="answerPattern"></p>
+      <p class="note" id="answerNote"></p>
+      <div class="actions">
+        <button id="shareBtn" class="primary">Share result</button>
+        <button id="practiceBtn">Practice another</button>
+      </div>
+      <p class="next" id="nextIn"></p>
+    </section>
+  </main>
+
+  <footer>
+    Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>, via <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> and <a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a>. Rendered with <a href="https://maplibre.org/" target="_blank" rel="noopener">MapLibre</a>.
+    City list: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>.
+  </footer>
+
+  <dialog id="help">
+    <h2>How to play</h2>
+    <p>Each day there's a new city, shown as an unlabelled 3D model: a small piece of it, chosen to show how the city was planned or how it grew. Drag with two fingers (or the right mouse button) to tilt and turn it.</p>
+    <p>You have <b>six guesses</b>. After each wrong guess the map gives a little more away:</p>
+    <ol>
+      <li>Streets and buildings, 800 m across</li>
+      <li>Water and parks appear</li>
+      <li>Zoom out to 1.2 km, railways appear</li>
+      <li>1.6 km, plus a hint about the city's pattern</li>
+      <li>The full 2 km sheet, plus the continent</li>
+      <li>The country</li>
+    </ol>
+    <p>Each guess shows how far away and in which direction the answer lies.</p>
+    <p class="key"><span>🟩 right</span><span>🟨 under 500 km</span><span>🟧 under 2,000 km</span><span>🟥 further</span></p>
+    <p>Look for grids and their angles, ring roads where walls stood, medieval tangles, canals, diagonals cutting across blocks, block sizes against the scale bar.</p>
+    <button class="primary" data-close>Start</button>
+  </dialog>
+
+  <dialog id="stats">
+    <h2>Statistics</h2>
+    <div class="nums" id="nums"></div>
+    <h3>Guess distribution</h3>
+    <div class="dist" id="dist"></div>
+    <button data-close>Close</button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/maplibre-gl.be9633c4d8.js"></script>
+  <script type="module" src="assets/game.aa5c5b2dab.js"></script>
+</body>
+</html>
